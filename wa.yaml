@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: webapp-ingress
+  namespace: www
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.frontend.rule.type: PathPrefixStrip
+spec:
+  tls:
+    - secretName: traefik-cert
+  rules:
+  - host: example.local
+    http:
+      paths:
+      - path: /www1
+        backend:
+          serviceName: www1-svc
+          servicePort: 80
+      - path: /www2
+        backend:
+          serviceName: www2-svc
+          servicePort: 80
